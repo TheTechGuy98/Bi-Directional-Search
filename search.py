@@ -87,17 +87,64 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    seen = [] 
+    stack = util.Stack()     # Stack Fringe for DFS
+    stack.push((problem.getStartState(), []))
+    while stack.isEmpty() == False:
+        element = stack.pop()
+        node = element[0]
+        pathTillNode = element[1]
+
+        if problem.isGoalState(node) == True:       # Solution Found    
+            break
+        else:
+            if node not in seen:            # If node was not already explored add to explored list
+                seen.append(node)
+                listOfChildren = problem.getSuccessors(node)
+                for child in listOfChildren:
+                    stack.push((child[0], pathTillNode+[child[1]]))    # Push Child Nodes in Stack
+    return pathTillNode
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    seen = [] 
+    queue = util.Queue()     # Queue Fringe for BFS
+    queue.push((problem.getStartState(), []))
+    while queue.isEmpty() == False:
+        element = queue.pop()
+        node = element[0]
+        pathTillNode = element[1]
+        if problem.isGoalState(node) == True:       # Solution Found    
+            break
+        else:
+            if node not in seen:            # If node was not already explored add to explored list 
+                seen.append(node)
+                listOfChildren = problem.getSuccessors(node)
+                for child in listOfChildren:
+                    queue.push((child[0], pathTillNode+[child[1]]))    # Push Child Nodes in queue
+    return pathTillNode
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    seen = [] 
+    priorityQueue = util.PriorityQueue()  # UCS uses Priority Queue for Fringe
+    priorityQueue.push((problem.getStartState(), [], 0), 0)  
+    while priorityQueue.isEmpty() == False:
+        element = priorityQueue.pop()
+        node = element[0]
+        pathTillNode = element[1]
+        costTillNode = element[2]
+        if problem.isGoalState(node) == True:       # Solution Found 
+            break
+        else:
+            if node not in seen:     # If node was not already explored add to explored list 
+                seen.append(node)  
+                listOfChildren = problem.getSuccessors(node)
+                for child in listOfChildren:
+                    priorityQueue.push((child[0], pathTillNode + [child[1]], costTillNode+child[2]),costTillNode+child[2])  # Push Child Nodes in priority queue
+    return pathTillNode
 
 def nullHeuristic(state, problem=None):
     """
@@ -109,7 +156,23 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    seen = [] 
+    priorityQueue = util.PriorityQueue()  # Astar also uses Priority Queue for Fringe
+    priorityQueue.push((problem.getStartState(), [], 0), heuristic(problem.getStartState(), problem) + 0)  #Adding heuristic function to the cost.
+    while priorityQueue.isEmpty() == False:
+        element = priorityQueue.pop()
+        node = element[0]
+        pathTillNode = element[1]
+        costTillNode = element[2]
+        if problem.isGoalState(node) == True:       # Solution Found 
+            break
+        else:
+            if node not in seen:     # If node was not already explored add to explored list 
+                seen.append(node)  
+                listOfChildren = problem.getSuccessors(node)
+                for child in listOfChildren:
+                    priorityQueue.push((child[0], pathTillNode + [child[1]], costTillNode + child[2]),costTillNode + child[2] + heuristic(child[0], problem))  # Push Child Nodes in priority queue
+    return pathTillNode
 
 
 # Abbreviations
