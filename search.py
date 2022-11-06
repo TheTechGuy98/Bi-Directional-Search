@@ -302,12 +302,12 @@ def bidirectionalsearch(problem,heuristic=nullHeuristic):
         #print("C_value:",C)       
         
         #Testing whether the cost is below threshold
-        f_minf=fminf(openf)
-        f_minb=fminb(openb)
-        g_minf=gminf(openf)
-        g_minb=gminb(openb)
+        f_minf=fminf(openf) #min f value over all the states in openf
+        f_minb=fminb(openb) #min f value over all the states in openb
+        g_minf=gminf(openf) #min g value over all the states in openf
+        g_minb=gminb(openb) #min g value over all the states in openb
         
-        #1 here is the epsilon value representing the min edge value that will exist in the graph            
+        #1 here is the epsilon value representing the min edge value that will exist in the graph or the search problem          
         if U<= max(C,f_minf,f_minb,g_minf+g_minb+1): 
             '''
             print("fminf value:",f_minf)            
@@ -343,21 +343,24 @@ def bidirectionalsearch(problem,heuristic=nullHeuristic):
                     heap=p,index,[state,action,g,h,f] adding reference here
                 '''
                 
+                #We calculate the g,f values for the child node
                 action=state[1]
                 gfc=gfn+state[2]
                 if heuristic==nullHeuristic:
-                    h=0 #null heuristic rightnow. Later add the manhattan distance
+                    h=0
                 else:
                     h=manhattanDistance(state[0],problem.goal)
                 f=gfc+h
                 
-                
+                #This function should check if the node aleady exists in the Queues or not and if it is and the g value is small then update otherwise skip this child and move to the next one
                 if check(openf,closedf,state,gfc):
                     #print("The check is True")
                     continue
                 else: 
-                    #add this new state
+                    #add this new state to the relevant queue
                     openf.push([state[0],previous_action+[action],gfc,h,f],max(f,2*gfc))
+                    
+                    #if this new state is in the other open queue then we have found the common node and now its time to return the actions
                     flag,gbc=check_in_openb(state,openb)
                     if flag:                        
                         U=min(U,gfc,gbc)
@@ -378,7 +381,7 @@ def bidirectionalsearch(problem,heuristic=nullHeuristic):
             '''
             
         else:
-                    
+            #Do exactly the same here as above except we will reverse/change the queues and everything else        
             states=problem.getSuccessors(prmin[1]) #prmin[1] is prminb in pseudo code
             
             #print("Choosing state",prmin[1]," for expansion and this is openb condition")
@@ -393,7 +396,7 @@ def bidirectionalsearch(problem,heuristic=nullHeuristic):
                 action=state[1]
                 gbc=gbn+state[2]
                 if heuristic==nullHeuristic:
-                    h=0 #null heuristic rightnow. Later add the manhattan distance
+                    h=0
                 else:
                     h=manhattanDistance(state[0],problem.getStartState())
                 f=gbc+h
@@ -424,7 +427,11 @@ def bidirectionalsearch(problem,heuristic=nullHeuristic):
             print("closedf: ",closedf.heap)
             '''
     print("Action policy calculated!")
+    #reverse_actions will reverse all the actions in openb since this search started from the goal state and filled all the actions accordingly , hence if we were
+    #travelling in forward direction we would need the order and the actions to be oppoiste: For e.g North , West becomes East , South
     return final_actions_openf+reverse_actions(final_actions_openb)
+    
+    #print the output at instances to see the queue values or some other variable if requried. It should clear all the doubts
     
 
     
