@@ -1,11 +1,11 @@
 import sys
 from pacman import runGames, readCommand
-from scipy.stats import ttest_ind
+from scipy.stats import f_oneway
 import math
 import os
 
-def ttest(data1,data2):
-	return ttest_ind(data1,data2)
+def anovaTest(data):
+    return f_oneway(*data)
 
 
 def deleteFile(path = '.\data\data.txt'):
@@ -48,23 +48,14 @@ if __name__ == '__main__':
     fn_list = fn_list_string[1:-1].split(',')
     deleteFile()
 
-
-
     
     for i in range(len(fn_list)):
         for j in maze_list:
-            print(j)
             arg_list = ['-l',j,'-p','SearchAgent','-a','fn='+fn_list[i],'-q']
             args = readCommand( arg_list) 
             games = runGames( **args )
 
     lines = readFile()
     res = dataArray(lines)
-    print(res)
-    print(ttest(res[0],res[1]))
-
-
-
-    # import cProfile
-    # cProfile.run("runGames( **args )")
+    print(anovaTest(res))
     pass

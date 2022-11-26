@@ -115,7 +115,11 @@ class SearchAgent(Agent):
         self.actions  = self.searchFunction(problem) # Find a path
         totalCost = problem.getCostOfActions(self.actions)
         print('Path found with total cost of %d in %.1f seconds' % (totalCost, time.time() - starttime))
-        if '_expanded' in dir(problem): print('Search nodes expanded: %d' % problem._expanded)
+        if '_expanded' in dir(problem): 
+            print('Search nodes expanded: %d' % problem._expanded)
+            f = open(".\data\data.txt", "a")
+            f.write(str(self.searchFunction.__name__)+ ',' + str(problem._expanded))
+            f.write("\n")
 
     def getAction(self, state):
         """
