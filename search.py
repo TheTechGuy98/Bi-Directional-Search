@@ -340,7 +340,6 @@ def biderictional_MM0(problem):
         # Check if the current node has been reached in reverse direction, this will mean we have found path
         if (curr_node_f in closed_b):
             # return forward action and reversed backward actions
-            problem.display_expanded_nodes()
             return action_f + reverse_actions_mm0(closed_b[curr_node_f])
 
         # check if current node has been explored previously
@@ -868,7 +867,6 @@ def bidirectionalSearch(problem, heuristic=nullHeuristic, useEpsilon=False, useF
                     solution.append('East')
             # return U
             #print(solution)
-            problem.display_expanded_nodes()
             return solution
 
         if C == pr_min_f:
