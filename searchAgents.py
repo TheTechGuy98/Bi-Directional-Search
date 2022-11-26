@@ -179,6 +179,12 @@ class PositionSearchProblem(search.SearchProblem):
                     __main__._display.drawExpandedCells(self._visitedlist) #@UndefinedVariable
 
         return isGoal
+    def display_expanded_nodes(self):
+        if self.visualize:
+            import __main__
+            if '_display' in dir(__main__):
+                if 'drawExpandedCells' in dir(__main__._display):
+                    __main__._display.drawExpandedCells(self._visitedlist)
 
     def getSuccessors(self, state):
         """

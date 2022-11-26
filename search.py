@@ -289,6 +289,22 @@ def check_in_openf(state, openf):
             return True, openf.heap[i][2][2]
     return False, 0
 
+def reverse_actions_mm0(final_actions_openb):
+    reversed_actions=[]
+    final_actions_openb=final_actions_openb[:-1]
+    for action in final_actions_openb:
+        if action == 'West':
+            reversed_actions.append('East')
+        elif action == 'East':
+            reversed_actions.append('West')
+        elif action == 'South':
+            reversed_actions.append('North')
+        elif action == 'North':
+            reversed_actions.append('South')
+    return reversed_actions[::-1]
+
+
+
 def reverse_actions(final_actions_openb):
     final_actions_openb.reverse()
     for i in range(len(final_actions_openb)):
@@ -324,7 +340,8 @@ def biderictional_MM0(problem):
         # Check if the current node has been reached in reverse direction, this will mean we have found path
         if (curr_node_f in closed_b):
             # return forward action and reversed backward actions
-            return action_f + reverse_actions(closed_b[curr_node_f])
+            problem.display_expanded_nodes()
+            return action_f + reverse_actions_mm0(closed_b[curr_node_f])
 
         # check if current node has been explored previously
         if curr_node_f not in closed_f:
@@ -345,7 +362,8 @@ def biderictional_MM0(problem):
 
         # Check if the current node has been reached in forward direction, this will mean we have found path
         if curr_node_b in closed_f:
-            return closed_f[curr_node_b] + reverse_actions(action_b)
+            problem.display_expanded_nodes()
+            return closed_f[curr_node_b] + reverse_actions_mm0(action_b)
 
         # check if current node has been explored previously
         if curr_node_b not in closed_b:
@@ -650,6 +668,7 @@ def bidirectionalsearch(problem, heuristic=nullHeuristic):
     print(openf.heap[0][2][4])
     '''
     #print(final_actions_openf + reverse_actions(final_actions_openb))
+    problem.display_expanded_nodes()
     return final_actions_openf + reverse_actions(final_actions_openb)
 
 
@@ -849,6 +868,7 @@ def bidirectionalSearch(problem, heuristic=nullHeuristic, useEpsilon=False, useF
                     solution.append('East')
             # return U
             #print(solution)
+            problem.display_expanded_nodes()
             return solution
 
         if C == pr_min_f:
