@@ -18,13 +18,3 @@ biderictional_MM0,193
 biderictional_MM0,194
 biderictional_MM0,70
 biderictional_MM0,99
-depthFirstSearch,59
-depthFirstSearch,390
-depthFirstSearch,530
-depthFirstSearch,146
-depthFirstSearch,15
-depthFirstSearch,177
-depthFirstSearch,65
-depthFirstSearch,83
-depthFirstSearch,52
-depthFirstSearch,92

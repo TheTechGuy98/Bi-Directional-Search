@@ -9,8 +9,10 @@ def ttest(data1,data2):
 
 
 def deleteFile(path = '.\data\data.txt'):
-    os.remove(path)
-    return
+    try:
+        os.remove(path)
+    finally:
+        return
 
 def readFile(path = '.\data\data.txt'):
     f = open(path,'r')
@@ -45,7 +47,7 @@ if __name__ == '__main__':
     """
     fn_list_string = sys.argv[1]
     maze_list = ['smallMaze','bigMaze', 'openmaze_1','mediumMaze','tinyMaze','customBigMaze1','customMediumMaze1','customMediumMaze3','customSmallMaze1','customSmallMaze2']
-    fn_list = fn_list_string[1:-1].split(',')
+    fn_list = fn_list_string[1:-1].split(':')
     deleteFile()
 
 
