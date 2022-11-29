@@ -118,8 +118,9 @@ class SearchAgent(Agent):
         if '_expanded' in dir(problem): 
             print('Search nodes expanded: %d' % problem._expanded)
             f = open(".\data\data.txt", "a")
-            f.write(str(self.searchFunction.__name__)+ ',' + str(problem._expanded))
+            f.write(str(problem._expanded))
             f.write("\n")
+            f.close()
 
     def getAction(self, state):
         """

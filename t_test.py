@@ -46,7 +46,7 @@ if __name__ == '__main__':
     > python pacman.py --help
     """
     fn_list_string = sys.argv[1]
-    maze_list = ['smallMaze','bigMaze', 'openmaze_1','mediumMaze','tinyMaze','customBigMaze1','customMediumMaze1','customMediumMaze3','customSmallMaze1','customSmallMaze2']
+    maze_list = ['bigMaze','openMaze','mediumMaze','customBigMaze1','customBigMaze2','customMediumMaze1','customMediumMaze2','customMediumMaze3']
     fn_list = fn_list_string[1:-1].split(':')
     deleteFile()
 
@@ -55,6 +55,9 @@ if __name__ == '__main__':
     
     for i in range(len(fn_list)):
         for j in maze_list:
+            f = open(".\data\data.txt", "a")
+            f.write(str(fn_list[i].split(',')[0]+','))
+            f.close()
             print(j)
             arg_list = ['-l',j,'-p','SearchAgent','-a','fn='+fn_list[i],'-q']
             args = readCommand( arg_list) 
