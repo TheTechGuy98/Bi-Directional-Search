@@ -53,6 +53,9 @@ if __name__ == '__main__':
     
     for i in range(len(fn_list)):
         for j in maze_list:
+            f = open(".\data\data.txt", "a")
+            f.write(str(fn_list[i].split(',')[0]+','))
+            f.close()
             arg_list = ['-l',j,'-p','SearchAgent','-a','fn='+fn_list[i],'-q']
             args = readCommand( arg_list) 
             games = runGames( **args )
