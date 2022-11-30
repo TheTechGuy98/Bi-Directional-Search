@@ -118,8 +118,9 @@ class SearchAgent(Agent):
         if '_expanded' in dir(problem): 
             print('Search nodes expanded: %d' % problem._expanded)
             f = open(".\data\data.txt", "a")
-            f.write(str(self.searchFunction.__name__)+ ',' + str(problem._expanded))
+            f.write(str(problem._expanded))
             f.write("\n")
+            f.close()
 
     def getAction(self, state):
         """
@@ -156,6 +157,7 @@ class PositionSearchProblem(search.SearchProblem):
         costFn: A function from a search state (tuple) to a non-negative number
         goal: A position in the gameState
         """
+        self.gameState=gameState
         self.walls = gameState.getWalls()
         self.startState = gameState.getPacmanPosition()
         if start != None: self.startState = start
@@ -271,6 +273,10 @@ def euclideanHeuristic(position, problem, info={}):
     xy1 = position
     xy2 = problem.goal
     return ( (xy1[0] - xy2[0]) ** 2 + (xy1[1] - xy2[1]) ** 2 ) ** 0.5
+    
+def mazeHeuristic(position, problem, info={}):
+    "The Maze distance heuristic for a PositionSearchProblem"
+    return mazeDistance(position, problem.goal,problem.gameState)
 
 #####################################################
 # This portion is incomplete.  Time to write code!  #

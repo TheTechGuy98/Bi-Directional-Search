@@ -9,8 +9,10 @@ def anovaTest(data):
 
 
 def deleteFile(path = '.\data\data.txt'):
-    os.remove(path)
-    return
+    try:
+        os.remove(path)
+    finally:
+        return
 
 def readFile(path = '.\data\data.txt'):
     f = open(path,'r')
@@ -45,12 +47,15 @@ if __name__ == '__main__':
     """
     fn_list_string = sys.argv[1]
     maze_list = ['smallMaze','bigMaze', 'openmaze_1','mediumMaze','tinyMaze','customBigMaze1','customMediumMaze1','customMediumMaze3','customSmallMaze1','customSmallMaze2']
-    fn_list = fn_list_string[1:-1].split(',')
+    fn_list = fn_list_string[1:-1].split(':')
     deleteFile()
 
     
     for i in range(len(fn_list)):
         for j in maze_list:
+            f = open(".\data\data.txt", "a")
+            f.write(str(fn_list[i].split(',')[0]+','))
+            f.close()
             arg_list = ['-l',j,'-p','SearchAgent','-a','fn='+fn_list[i],'-q']
             args = readCommand( arg_list) 
             games = runGames( **args )

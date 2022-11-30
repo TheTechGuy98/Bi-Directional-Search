@@ -203,12 +203,13 @@ def gminf(openf,closedf):
         if temp1 > openf.heap[i][2][2]:
             temp1 = openf.heap[i][2][2]
     
-    
+    '''
     temp2 = float('inf')
     for i in range(len(closedf.heap)):
         if temp2 > closedf.heap[i][2][2]:
             temp2 = closedf.heap[i][2][2]
-    return min(temp1,temp2)
+    '''
+    return temp1
 
 
 def gminb(openb,closedb):
@@ -216,12 +217,13 @@ def gminb(openb,closedb):
     for i in range(len(openb.heap)):
         if temp1 > openb.heap[i][2][2]:
             temp1 = openb.heap[i][2][2]
-    
+    '''
     temp2 = float('inf')
     for i in range(len(closedb.heap)):
         if temp2 > closedb.heap[i][2][2]:
             temp2 = closedb.heap[i][2][2]
-    return min(temp1,temp2)
+    '''
+    return temp1
 
 
 def check(openf, closedf, state, gfc):
@@ -289,20 +291,20 @@ def check_in_openf(state, openf):
             return True, openf.heap[i][2][2]
     return False, 0
 
-def reverse_actions_mm0(final_actions_openb):
-    reversed_actions=[]
-    final_actions_openb=final_actions_openb[:-1]
-    for action in final_actions_openb:
+def reverse_direction_standard(actions):
+    actions=actions[:-1]
+    reversed_action=[]
+    for action in actions:
         if action == 'West':
-            reversed_actions.append('East')
+            reversed_action.append('East')
         elif action == 'East':
-            reversed_actions.append('West')
+            reversed_action.append('West')
         elif action == 'South':
-            reversed_actions.append('North')
+            reversed_action.append('North')
         elif action == 'North':
-            reversed_actions.append('South')
-    return reversed_actions[::-1]
-
+            reversed_action.append('South')
+    reversed_action = reversed_action[::-1]
+    return reversed_action
 
 
 def reverse_actions(final_actions_openb):
@@ -320,7 +322,7 @@ def reverse_actions(final_actions_openb):
 
 
 
-def biderictional_MM0(problem):
+def standard_biderictional(problem):
     # Set up fringe and closed set for both forward and backward direction
     open_f = util.Queue()
     closed_f = defaultdict()
@@ -340,7 +342,7 @@ def biderictional_MM0(problem):
         # Check if the current node has been reached in reverse direction, this will mean we have found path
         if (curr_node_f in closed_b):
             # return forward action and reversed backward actions
-            return action_f + reverse_actions_mm0(closed_b[curr_node_f])
+            return action_f + reverse_direction_standard(closed_b[curr_node_f])
 
         # check if current node has been explored previously
         if curr_node_f not in closed_f:
@@ -361,8 +363,7 @@ def biderictional_MM0(problem):
 
         # Check if the current node has been reached in forward direction, this will mean we have found path
         if curr_node_b in closed_f:
-            problem.display_expanded_nodes()
-            return closed_f[curr_node_b] + reverse_actions_mm0(action_b)
+            return closed_f[curr_node_b] + reverse_direction_standard(action_b)
 
         # check if current node has been explored previously
         if curr_node_b not in closed_b:
@@ -667,7 +668,6 @@ def bidirectionalsearch(problem, heuristic=nullHeuristic):
     print(openf.heap[0][2][4])
     '''
     #print(final_actions_openf + reverse_actions(final_actions_openb))
-    problem.display_expanded_nodes()
     return final_actions_openf + reverse_actions(final_actions_openb)
 
 
@@ -892,5 +892,5 @@ ucs = uniformCostSearch
 
 # Final project bidirectional search
 bid = bidirectionalsearch
-bid_mm0 = biderictional_MM0
+standard_bid = standard_biderictional
 bis=bidirectionalSearch
