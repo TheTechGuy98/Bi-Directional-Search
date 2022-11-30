@@ -291,6 +291,22 @@ def check_in_openf(state, openf):
             return True, openf.heap[i][2][2]
     return False, 0
 
+def reverse_direction_standard(actions):
+    actions=actions[:-1]
+    reversed_action=[]
+    for action in actions:
+        if action == 'West':
+            reversed_action.append('East')
+        elif action == 'East':
+            reversed_action.append('West')
+        elif action == 'South':
+            reversed_action.append('North')
+        elif action == 'North':
+            reversed_action.append('South')
+    reversed_action = reversed_action[::-1]
+    return reversed_action
+
+
 def reverse_actions(final_actions_openb):
     final_actions_openb.reverse()
     for i in range(len(final_actions_openb)):
@@ -326,7 +342,7 @@ def standard_biderictional(problem):
         # Check if the current node has been reached in reverse direction, this will mean we have found path
         if (curr_node_f in closed_b):
             # return forward action and reversed backward actions
-            return action_f + reverse_actions(closed_b[curr_node_f])
+            return action_f + reverse_direction_standard(closed_b[curr_node_f])
 
         # check if current node has been explored previously
         if curr_node_f not in closed_f:
@@ -347,7 +363,7 @@ def standard_biderictional(problem):
 
         # Check if the current node has been reached in forward direction, this will mean we have found path
         if curr_node_b in closed_f:
-            return closed_f[curr_node_b] + reverse_actions(action_b)
+            return closed_f[curr_node_b] + reverse_direction_standard(action_b)
 
         # check if current node has been explored previously
         if curr_node_b not in closed_b:
