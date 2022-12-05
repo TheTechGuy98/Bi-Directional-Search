@@ -1,6 +1,8 @@
 import sys
 from pacman import runGames, readCommand
 from scipy.stats import ttest_ind
+from sklearn import preprocessing
+import numpy as np
 import math
 import os
 
@@ -34,6 +36,9 @@ def dataArray(lines):
 
 
 
+
+
+
 if __name__ == '__main__':
     """
     The main function called when pacman.py is run
@@ -46,7 +51,7 @@ if __name__ == '__main__':
     > python pacman.py --help
     """
     fn_list_string = sys.argv[1]
-    maze_list = ['bigMaze','openMaze','mediumMaze','customBigMaze1','customBigMaze2','customMediumMaze1','customMediumMaze2','customMediumMaze3']
+    maze_list = ['mediumMaze','customMediumMaze2','customMediumMaze3','customMediumMaze1','customBigMaze1_t','customBigMaze2_t','customMediumMaze1_t','customMediumMaze2_t','customMediumMaze3_t','openMaze_t','customMaze2_t']
     fn_list = fn_list_string[1:-1].split(':')
     deleteFile()
 
@@ -56,7 +61,12 @@ if __name__ == '__main__':
     for i in range(len(fn_list)):
         for j in maze_list:
             f = open(".\data\data.txt", "a")
-            f.write(str(fn_list[i].split(',')[0]+','))
+            if fn_list[i].split(',')[0] == 'bid' and fn_list[i].split(',')[1] == 'heuristic=nullHeuristic': 
+                f.write('bid_mm0'+',')
+            elif fn_list[i].split(',')[0] == 'bid' and fn_list[i].split(',')[1] == 'heuristic=euclideanHeuristic': 
+                f.write('bid_mm_eucl'+',')
+            else:
+                f.write(str(fn_list[i].split(',')[0]+','))
             f.close()
             print(j)
             arg_list = ['-l',j,'-p','SearchAgent','-a','fn='+fn_list[i],'-q']
