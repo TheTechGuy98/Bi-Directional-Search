@@ -62,9 +62,12 @@ python pacman.py -l Opposites -p SearchAgent -a fn=bid,heuristic=nullHeuristic -
 To run T-test use the following format:
 - python t_test.py [search_strategy_1,heuristic=heuristic_name:search_strategy_2,heuristic=heuristic_name]
 
-For example:
+Some examples:
 ```
-python t_test.py [astar,heuristic=nullHeuristic:bid,heuristic=nullHeuristic]
+python t_test.py [astar,heuristic=manhattanHeuristic:bid,heuristic=manhattanHeuristic]
+python t_test.py [bid,heuristic=nullHeuristic:bid,heuristic=manhattanHeuristic]
+python t_test.py [bid,heuristic=manhattanHeuristic:bfs]
+python t_test.py [bid,heuristic=mazeHeuristic:bid,heuristic=nullHeuristic]
 ```
 
 Some notes:
