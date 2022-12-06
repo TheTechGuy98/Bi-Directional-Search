@@ -61,5 +61,5 @@ For example:
 
 Some notes:
 - The 'bid' argument represents the bidirectional search strategy from the paper.
-- For mm0 version put heuristic=nullHeuristic while calling the bid serach strategy and for mm any of the euclidean,manhattan or maze would do
+- For mm0 version put heuristic=nullHeuristic while calling the bid serach strategy and for mm version any of the euclidean,manhattan or maze heuristics would do.
 - The maze heuristic may cause delay in execution time in some layouts.
