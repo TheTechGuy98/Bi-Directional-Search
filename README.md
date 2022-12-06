@@ -23,7 +23,7 @@ You can choose from the following arguments for heuristics:
 - nullHeuristic  --> no heurisitc involved
 - euclideanHeuristic --> heuristic used is Euclidean distance
 - manhattanHeuristic --> heuristic used is Manhattan distance
-- mazeHeurisitc --> hueristic used is the actual maze distance 
+- mazeHeuristic --> hueristic used is the actual maze distance 
 
 You can choose from the following arguments for layouts:
 - tinyMaze
