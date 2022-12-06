@@ -56,13 +56,16 @@ To run the code on a single layout use the following format:
 - python pacman.py -l Layout_name -p SearchAgent -a fn=search_strategy,heuristic=heuristic_name -q
 
 For example:
-- python pacman.py -l Opposites -p SearchAgent -a fn=bid,heuristic=nullHeuristic -q
-
+```
+python pacman.py -l Opposites -p SearchAgent -a fn=bid,heuristic=nullHeuristic -q
+```
 To run T-test use the following format:
 - python t_test.py [search_strategy_1,heuristic=heuristic_name:search_strategy_2,heuristic=heuristic_name]
 
 For example:
-- python t_test.py [astar,heuristic=nullHeuristic:bid,heuristic=nullHeuristic]
+```
+python t_test.py [astar,heuristic=nullHeuristic:bid,heuristic=nullHeuristic]
+```
 
 Some notes:
 - The 'bid' argument represents the bidirectional search strategy from the paper.
