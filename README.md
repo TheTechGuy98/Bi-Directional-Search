@@ -1,7 +1,7 @@
 # Bi-Directional-Search
 This is the implementation of the paper 'Bidirectional Search That Is Guaranteed to Meet in the Middle' link:- https://webdocs.cs.ualberta.ca/~holte/Publications/MM-AAAI2016.pdf
 
-*************Team 12 CSE 571 AI ASU*************
+**Team 12 CSE 571 AI ASU**
 
 Requirements:- 
 python == 3.6
